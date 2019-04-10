@@ -25,19 +25,19 @@ This code may not be used for commercial purposes without my permission. Once fo
 enum SHT2x_CMD
 {
 	CMD_TRIG_TEMP_POLL = 0xF3, /* command trig. temp meas. no hold master */
-    CMD_TRIG_HUMI_POLL = 0xF5, /* command trig. humidity meas. no hold master */
-    CMD_USER_REG_WRITE = 0xE6, /* command writing user register */
-    CMD_USER_REG_READ = 0xE7, /* command reading user register */
-    CMD_SOFT_RESET = 0xFE, /* command soft reset */
-    CMD_MEASURE_READ = 0x00, /* read measured value (for software convenience) */
+	CMD_TRIG_HUMI_POLL = 0xF5, /* command trig. humidity meas. no hold master */
+	CMD_USER_REG_WRITE = 0xE6, /* command writing user register */
+	CMD_USER_REG_READ = 0xE7, /* command reading user register */
+	CMD_SOFT_RESET = 0xFE, /* command soft reset */
+	CMD_MEASURE_READ = 0x00, /* read measured value (for software convenience) */
 };
 
 enum SHT2x_OPTION
 {
-    OPT_RES_12_14BIT = 0x00, /* RH=12bit, T=14bit */
-    OPT_RES_8_12BIT = 0x01, /* RH= 8bit, T=12bit */
-    OPT_RES_10_13BIT = 0x80, /* RH=10bit, T=13bit */
-    OPT_RES_11_11BIT = 0x81  /* RH=11bit, T=11bit */
+	OPT_RES_12_14BIT = 0x00, /* RH=12bit, T=14bit */
+	OPT_RES_8_12BIT = 0x01, /* RH= 8bit, T=12bit */
+	OPT_RES_10_13BIT = 0x80, /* RH=10bit, T=13bit */
+	OPT_RES_11_11BIT = 0x81  /* RH=11bit, T=11bit */
 };
 
 int measure_read(int fd, SHT2x_CMD cmd, uint16_t *value);
@@ -128,8 +128,8 @@ float SHT2x::measure_t(void)
 		uint16_t value = 0x00;
 		 if (-1 != measure_read(dev_fd, cmd, &value))
 		{
-            temp = calc_temp(value);
-        }
+			temp = calc_temp(value);
+		}
 	}
 	return temp;
 }
@@ -148,17 +148,17 @@ float SHT2x::measure_h(void)
 		uint16_t value = 0x00;
 		 if (-1 != measure_read(dev_fd, cmd, &value))
 		{
-            humi = calc_humi(value);
-        }
+			humi = calc_humi(value);
+		}
 	}
 	return humi;
 }
 
 int measure_read(int fd, SHT2x_CMD cmd, uint16_t *value)
 {
-    uint8_t buf[3];
+	uint8_t buf[3];
 
-    for (uint8_t i = 0; i < 2; i++)
+	for (uint8_t i = 0; i < 2; i++)
 	{
 		if (read(fd, buf, 3) != 3)
 		{
@@ -177,47 +177,47 @@ int measure_read(int fd, SHT2x_CMD cmd, uint16_t *value)
 		}
 		*value = buf[0] << 8 | buf[1];
 		return 0;
-    }
-    perror("ERROR: i2c read");
-    return -1;
+	}
+	perror("ERROR: i2c read");
+	return -1;
 }
 
 uint8_t calc_crc(uint8_t data[], uint8_t size)
 {
-    uint16_t crc = 0;
+	uint16_t crc = 0;
 
-    for (uint8_t i = 0; i < size; i++)
+	for (uint8_t i = 0; i < size; i++)
 	{
 		crc ^= (data[i]);
 		for (uint8_t j = 0; j < 8; j++)
 		{
 			crc = (crc & 0x80) ? ((crc << 1) ^ CRC_POLY) : (crc << 1);
 		}
-    }
-    return crc;
+	}
+	return crc;
 }
 
 int check_crc(uint8_t data[], uint8_t size, uint8_t crc)
 {
-    return (calc_crc(data, size) == crc) ? 0 : -1;
+	return (calc_crc(data, size) == crc) ? 0 : -1;
 }
 
 float calc_temp(uint16_t value)
 {
-    if ((value & 0x2) != 0)
+	if ((value & 0x2) != 0)
 	{
-        perror("ERROR: invalid value");
-        exit(EXIT_FAILURE);
-    }
-    return -46.85 + (175.72 * (value & 0xFFFC)) / 0x10000;
+		perror("ERROR: invalid value");
+		exit(EXIT_FAILURE);
+	}
+	return -46.85 + (175.72 * (value & 0xFFFC)) / 0x10000;
 }
 
 float calc_humi(uint16_t value)
 {
-    if ((value & 0x2) == 0)
+	if ((value & 0x2) == 0)
 	{
-        perror("ERROR: invalid value");
-        exit(EXIT_FAILURE);
-    }
-    return -6 + (125.0 * (value & 0xFFFC)) / 0x10000;
+		perror("ERROR: invalid value");
+		exit(EXIT_FAILURE);
+	}
+	return -6 + (125.0 * (value & 0xFFFC)) / 0x10000;
 }
