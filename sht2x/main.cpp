@@ -16,7 +16,7 @@ This code may not be used for commercial purposes without my permission. Once fo
 int main(void)
 {
 	SHT2x sht20;
-	sht20.init_dev("/dev/i2c-0",I2C_DEV_ADDR);
+	sht20.init_dev((char*)"/dev/i2c-0",I2C_DEV_ADDR);
 	sht20.reset_dev();
 	float temp = 0.0f, humi = 0.0f;
 	for(int i = 0; i<30; ++i)
