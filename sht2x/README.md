@@ -7,8 +7,17 @@ This code may not be used for commercial purposes without my permission. Once fo
 
 
 # SHT20温湿度传感器驱动代码，Linux系统，I2C接口
-# 用法
+# 编译
 ```
 [username@hostname sh2x]$ cmake -S . -B ./build
 [username@hostname sh2x]$ make
+```
+# 用法
+```
+#include "sh2x/sht2x.hpp"
+
+#define I2C_DEV_ADDR        0x40
+SHT2x *sht20 = SHT2x::getInstance("/dev/i2c-0", I2C_DEV_ADDR);
+float temp = sht20->getTemperature();
+float humi = sht20->getHumidity();
 ```
