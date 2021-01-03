@@ -7,7 +7,9 @@ This code may not be used for commercial purposes without my permission. Once fo
 (including spaces and punctuation). Once you have used this code, by default you have read and accepted the statement.
 */
 
-SHT20温湿度传感器驱动代码，Linux系统，I2C接口
-用法:
+#SHT20温湿度传感器驱动代码，Linux系统，I2C接口
+#用法
+```
 [username@hostname sh2x]$ cmake -S . -B ./build
 [username@hostname sh2x]$ make
+```
