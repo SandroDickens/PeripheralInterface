@@ -6,4 +6,5 @@ This code may not be used for commercial purposes without my permission. Once fo
 (including spaces and punctuation). Once you have used this code, by default you have read and accepted the statement.
 
 # 列表
-1. sh2x: SHT20温湿度传感器驱动代码，Linux系统，I2C接口
+## 1. sh2x
+SHT20温湿度传感器驱动代码，Linux系统，I2C接口
