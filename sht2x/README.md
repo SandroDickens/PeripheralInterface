@@ -12,6 +12,10 @@ This code may not be used for commercial purposes without my permission. Once fo
 [username@hostname sh2x]$ cmake -S . -B ./build
 [username@hostname sh2x]$ make
 ```
+或者
+```
+[username@hostname sh2x]$ ./run.sh
+```
 # 用法
 ```
 #include "sh2x/sht2x.hpp"
