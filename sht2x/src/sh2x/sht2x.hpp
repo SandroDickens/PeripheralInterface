@@ -61,7 +61,7 @@ private:
 	uint16_t i2c_addr;
 	static std::mutex instMutex;
 	static SHT2x *instance;
-	InnerGarbo innerGarbo;
+	static InnerGarbo innerGarbo;
 };
 
 #endif /* !_SHT2X_H_ */
